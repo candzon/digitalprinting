@@ -1,2 +1,1 @@
-#SQL file for digital printing database
-*.db_digitalprinting
+db_digitalprinting.sql
