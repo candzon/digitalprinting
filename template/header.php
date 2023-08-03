@@ -1,16 +1,16 @@
 <?php
-	require 'koneksi.php';
-	date_default_timezone_set('Asia/Jakarta');
+require 'koneksi.php';
+date_default_timezone_set('Asia/Jakarta');
 
-  session_start();
-	error_reporting(0);
+session_start();
+error_reporting(0);
 
-	if (!isset($_SESSION["login"])) {
-		header("location: login.php");
-		exit;
-	}
+if (!isset($_SESSION["login"])) {
+  header("location: login.php");
+  exit;
+}
 
-	$level = $_SESSION["level"];
+$level = $_SESSION["level"];
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +62,8 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        
+      <a href="index.php" class="logo d-flex align-items-center">
+
         <span class="d-none d-lg-block">SIDIPIN</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -82,35 +82,13 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?php echo $_SESSION["username"]; ?></h6>
-              <span><?php
-$user = $_SESSION["username"];
-switch ($user) {
-    case "pelanggan":
-        echo "Pelanggan";
-        break;
-    case "sales_order":
-        echo "Sales";
-        break;
-    case "data_analyst":
-        echo "Analyst";
-        break;
-    case "inventory_control":
-        echo "Inventory";
-        break;
-    default:
-        echo "Finance";
-}
-?></span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+              <span>
+                <?php
+                $user = $_SESSION["username"];
+                echo $user === "pelanggan" ? "Pelanggan" : ($user === "sales_order" ? "Sales" : ($user === "data_analyst" ? "Analyst" : ($user === "inventory_control" ? "Inventory" : "Finance")));
+                ?>
+              </span>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -144,72 +122,75 @@ switch ($user) {
       </li><!-- End Dashboard Nav -->
 
 
-      
+
       <li class="nav-heading">Data Master</li>
 
       <?php if ($level == "analyst") { ?>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="data-pelanggan.php">
-        <i class="bi bi-person-fill"></i><span>Pelanggan</span>
-        </a>
-      </li><!-- End Pelanggan Nav -->
-      
-      <?php } if ($level == "inventory" || $level == "pelanggan") { ?>
-      <li class="nav-item">
-      <a class="nav-link collapsed" href="data-print.php">
-        <i class="bi bi-printer-fill"></i><span>Print</span>
-        </a>
-      </li><!-- End Pelanggan Nav -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="data-pelanggan.php">
+            <i class="bi bi-person-fill"></i><span>Pelanggan</span>
+          </a>
+        </li><!-- End Pelanggan Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="data-bahan.php">
-        <i class="bi bi-collection-fill"></i><span>Bahan</span>
-        </a>
-      </li><!-- End Pelanggan Nav -->
+      <?php }
+      if ($level == "inventory" || $level == "pelanggan") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="data-print.php">
+            <i class="bi bi-printer-fill"></i><span>Print</span>
+          </a>
+        </li><!-- End Pelanggan Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="data-bahan.php">
+            <i class="bi bi-collection-fill"></i><span>Bahan</span>
+          </a>
+        </li><!-- End Pelanggan Nav -->
 
       <?php } ?>
 
-      
+
       <li class="nav-heading">Transaksi</li>
 
       <?php if ($level == "pelanggan") { ?>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pemesanan.php">
-          <i class="bi bi-cart-check-fill"></i><span>Pemesanan</span>
-        </a>
-      </li><!-- End Pemesanan Nav -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pemesanan.php">
+            <i class="bi bi-cart-check-fill"></i><span>Pemesanan</span>
+          </a>
+        </li><!-- End Pemesanan Nav -->
 
       <?php } ?>
-      
+
       <li class="nav-heading">Laporan</li>
 
       <?php if ($level == "analyst") { ?>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="lap-pelanggan.php">
-        <i class="ri ri-file-list-2-line"></i><span>Pelanggan</span>
-        </a>
-      </li><!-- End Pelanggan Nav -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="lap-pelanggan.php">
+            <i class="ri ri-file-list-2-line"></i><span>Pelanggan</span>
+          </a>
+        </li><!-- End Pelanggan Nav -->
 
-      <?php } if ($level == "inventory") { ?>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="lap-print.php">
-          <i class="ri ri-file-list-2-line"></i><span>Print</span>
-        </a>
-      </li><!-- End Print Nav -->
+      <?php }
+      if ($level == "inventory") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="lap-print.php">
+            <i class="ri ri-file-list-2-line"></i><span>Print</span>
+          </a>
+        </li><!-- End Print Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="lap-bahan.php">
-          <i class="ri ri-file-list-2-line"></i><span>Bahan</span>
-        </a>
-      </li><!-- End Bahan Nav -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="lap-bahan.php">
+            <i class="ri ri-file-list-2-line"></i><span>Bahan</span>
+          </a>
+        </li><!-- End Bahan Nav -->
 
-      <?php } if ($level == "sales" || $level == "finance") { ?>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="lap-pemesanan.php">
-          <i class="ri ri-file-list-2-line"></i><span>Pemesanan</span>
-        </a>
-      </li><!-- End Pemesanan Nav -->
+      <?php }
+      if ($level == "sales" || $level == "finance") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="lap-pemesanan.php">
+            <i class="ri ri-file-list-2-line"></i><span>Pemesanan</span>
+          </a>
+        </li><!-- End Pemesanan Nav -->
       <?php } ?>
     </ul>
 
